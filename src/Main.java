@@ -624,7 +624,7 @@ public class Main {
                 sortedArray[i] = el;
             }
 
-            for (int i = numb + 1; i < maxElem; ++i)
+            for (int i = numb; i < maxElem; ++i)
                 ourArray[i].setText("");
 
             for (Integer i = 0; i < numb; ++i) {
