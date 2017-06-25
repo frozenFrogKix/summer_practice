@@ -104,6 +104,8 @@ public class Main {
             sortedEl[i].setMaximum(maxRange);
             sortedEl[i].setValue(minRange);
             sortedEl[i].setOrientation(JProgressBar.VERTICAL);
+            sortedEl[i].setStringPainted(true);
+            sortedEl[i].setString("");
             secVisPanel.add(sortedEl[i]);
         }
         secVisPanel.add(nextStepSortButt);
@@ -196,7 +198,10 @@ public class Main {
 
                             sortedArray[i] = k;
                             sortedEl[j].setValue(sortedArray[j]);
+                            sortedEl[j].setString(Integer.toString(sortedArray[j]));
                             sortedEl[i].setValue(sortedArray[i]);
+                            sortedEl[i].setString(Integer.toString(sortedArray[i]));
+
                             ourArray[j].setText(Integer.toString(sortedArray[j]));
                             ourArray[i].setText(Integer.toString(sortedArray[i]));
                             sortedEl[j].setForeground(Color.blue);
@@ -257,6 +262,7 @@ public class Main {
         for (int i = 0; i < numberOfSortedEl; ++i) {
             sortedArray[i] = arr[i];
             sortedEl[i].setValue(arr[i]);
+            sortedEl[i].setString(Integer.toString(arr[i]));
             ourArray[i].setText(Integer.toString(arr[i]));
             sortedEl[i].setForeground(Color.BLUE);
 
@@ -274,7 +280,9 @@ public class Main {
                 sortedArray[j] = sortedArray[i];
                 sortedArray[i] = k;
                 sortedEl[j].setValue(sortedArray[j]);
+                sortedEl[j].setString(Integer.toString(sortedArray[j]));
                 sortedEl[i].setValue(sortedArray[i]);
+                sortedEl[i].setString(Integer.toString(sortedArray[i]));
                 ourArray[j].setText(Integer.toString(sortedArray[j]));
                 ourArray[i].setText(Integer.toString(sortedArray[i]));
                 for (int p = 0; p < numberOfSortedEl; ++p) {
@@ -302,6 +310,7 @@ public class Main {
         for (int i = 0; i < numberOfSortedEl; ++i) {
             sortedArray[i] = arr[i];
             sortedEl[i].setValue(arr[i]);
+            sortedEl[i].setString(Integer.toString(arr[i]));
             ourArray[i].setText(Integer.toString(arr[i]));
             sortedEl[i].setForeground(Color.BLUE);
 
@@ -313,6 +322,7 @@ public class Main {
                     sortedEl[i].setForeground(Color.green);
                     sortedArray[i] = j;
                     sortedEl[i].setValue(j);
+                    sortedEl[i].setString(Integer.toString(j));
                     ourArray[i].setText(Integer.toString(j));
                     sortedEl[i].setForeground(Color.blue);
 
@@ -374,6 +384,7 @@ public class Main {
 
                             sortedArray[i] = j;
                             sortedEl[i].setValue(j);
+                            sortedEl[i].setString(Integer.toString(j));
                             ourArray[i].setText(Integer.toString(j));
 
                             try {
@@ -546,7 +557,8 @@ public class Main {
                     automaticSort(safeArr,result);
                     break;
                 case "Step-by-Step":
-                    //anotherSortButt.setEnabled(false);
+                    lock();
+                    anotherSortButt.setEnabled(true);
                     step = 1;
                     for (int i = 0;i<maxElem;++i){
                         firstSafedArray[i] = safeArr[i];
@@ -563,6 +575,7 @@ public class Main {
                         sortedEl[i].setForeground(Color.lightGray);
                     nextStepSortButt.setEnabled(false);
                     prevStepSortButt.setEnabled(false);
+                    unlock();
                     break;
             }
 
@@ -578,6 +591,7 @@ public class Main {
                 sortedEl[i].setValue(minRange);
                 // ourArray[i].setText("");
                 sortedEl[i].setVisible(true);
+                sortedEl[i].setString("");
             }
 
             try {
@@ -614,6 +628,7 @@ public class Main {
                 ourArray[i].setText("");
 
             for (Integer i = 0; i < numb; ++i) {
+                sortedEl[i].setString(Integer.toString(sortedArray[i]));
                 sortedEl[i].setValue(sortedArray[i]);
             }
             //расскоментировать при необходимости
@@ -638,6 +653,7 @@ public class Main {
                 ourArray[i].setText("");
                 sortedEl[i].setValue(minRange);
                 sortedEl[i].setVisible(true);
+                sortedEl[i].setString("");
             }
 
             try {
@@ -657,6 +673,7 @@ public class Main {
                 sch = random.nextInt(maxRange);
                 sortedEl[i].setValue(sch);
                 sortedArray[i] = sch;
+                sortedEl[i].setString(sch.toString());
                 ourArray[i].setText(sch.toString());
             }
             //расскомментировать, при необходимости
@@ -666,12 +683,9 @@ public class Main {
     }
 
     public static class nextStepActionListener implements ActionListener {
-
-
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             boolean flag = true;
-            //anotherSortButt.setEnabled(false);
             for (int i = 1;i<numberOfSortedEl;++i){
                 if (Integer.valueOf(ourArray[i-1].getText())>Integer.valueOf(ourArray[i].getText())){
                     flag = false;
@@ -686,10 +700,7 @@ public class Main {
                     safeArr[i] = firstSafedArray[i];
                 }
                 stepByStepSort(step, result, safeArr);
-            } //else {
-                //anotherSortButt.setEnabled(true);
-            //}
-
+            }
     }
 
 }
@@ -699,7 +710,6 @@ public class Main {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-           // anotherSortButt.setEnabled(false);
             Vector<Integer> result = new Vector<>();
             int[] safeArr = new int[maxElem];
             if(step>0){
@@ -710,7 +720,6 @@ public class Main {
             stepByStepSort(step,result,safeArr);}
             else if(step==0){
                 stepByStepSort(0,result,safeArr);
-              //  anotherSortButt.setEnabled(true);
             }
         }
 
