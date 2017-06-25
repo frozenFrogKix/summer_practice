@@ -1,1 +1,1 @@
-# summer_practice
+# SortsVisualizer
