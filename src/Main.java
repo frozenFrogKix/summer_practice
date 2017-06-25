@@ -530,4 +530,190 @@ public class Main {
         }
 
     }
+
+    public static class AnotherSortButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            Vector<Integer> result = new Vector<>();
+            int[] safeArr = new int[maxElem];
+            for (int i = 0;i<maxElem;++i)
+                safeArr[i] = sortedArray[i];
+
+            switch ((String)typeOfSort.getSelectedItem()){
+                case "Automatic":
+
+                    automaticSort(safeArr,result);
+                    break;
+                case "Step-by-Step":
+                    //anotherSortButt.setEnabled(false);
+                    step = 1;
+                    for (int i = 0;i<maxElem;++i){
+                        firstSafedArray[i] = safeArr[i];
+                    }
+                    stepByStepSort(step,result,safeArr);
+                    break;
+                case "Result":
+                    step = -1;
+                    for (int i = 0;i<maxElem;++i){
+                        firstSafedArray[i] = safeArr[i];
+                    }
+                    stepByStepSort(step,result,safeArr);
+                    for (int i = 0; i < maxElem; ++i)
+                        sortedEl[i].setForeground(Color.lightGray);
+                    nextStepSortButt.setEnabled(false);
+                    prevStepSortButt.setEnabled(false);
+                    break;
+            }
+
+
+        }
+    }
+
+    public static class GetElButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            Integer numb = maxElem, el = 0;
+            for (int i = 0; i < maxElem; ++i) {
+                sortedEl[i].setValue(minRange);
+                // ourArray[i].setText("");
+                sortedEl[i].setVisible(true);
+            }
+
+            try {
+                numb = Integer.valueOf(numbOfElement.getText());
+            } catch (NumberFormatException e) {
+                numbOfElement.setText("Неверный формат строки");
+                numb = 0;
+            }
+            if (numb > maxElem) {
+                numb = maxElem;
+                numbOfElement.setText(Integer.toString(maxElem));
+            }
+            numberOfSortedEl = numb;
+
+            for (Integer i = 0; i < numb; ++i) {
+                sortedArray[i] = 0;
+                try {
+                    el = Integer.valueOf(ourArray[i].getText());
+                } catch (NumberFormatException e) {
+                    numbOfElement.setText("Неверный формат элементов");
+                    return;
+                }
+                if (el > maxRange) {
+                    el = maxRange;
+                    ourArray[i].setText(Integer.toString(maxRange));
+                } else if (el<minRange){
+                    el = minRange;
+                    ourArray[i].setText(Integer.toString(minRange));
+                }
+                sortedArray[i] = el;
+            }
+
+            for (int i = numb + 1; i < maxElem; ++i)
+                ourArray[i].setText("");
+
+            for (Integer i = 0; i < numb; ++i) {
+                sortedEl[i].setValue(sortedArray[i]);
+            }
+            //расскоментировать при необходимости
+            //for (int i = numb;i<=maxElem;++i)
+            //    sortedEl[i].setVisible(false);
+
+
+        }
+    }
+
+
+    public static class RandomButtonActionListener implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+
+            Random random = new Random();
+            Integer numb = maxElem;
+
+            for (int i = 0;i<maxElem;++i){
+                ourArray[i].setText("");
+                sortedEl[i].setValue(minRange);
+                sortedEl[i].setVisible(true);
+            }
+
+            try {
+                numb = Integer.valueOf(numbOfElement.getText());
+            }catch (NumberFormatException e) {
+                numbOfElement.setText("Неверный формат строки");
+                numb=0;
+            }
+            if (numb>maxElem) {
+                numb = maxElem;
+                numbOfElement.setText(Integer.toString(maxElem));
+            } else if (numb<0){ numbOfElement.setText(Integer.toString(0));
+            numb = 0;}
+            numberOfSortedEl = numb;
+            Integer sch = 0;
+            for (Integer i = 0;i<numb;++i){
+                sch = random.nextInt(maxRange);
+                sortedEl[i].setValue(sch);
+                sortedArray[i] = sch;
+                ourArray[i].setText(sch.toString());
+            }
+            //расскомментировать, при необходимости
+            //for (int i = numb;i<maxElem;++i)
+            //    sortedEl[i].setVisible(false);
+        }
+    }
+
+    public static class nextStepActionListener implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            boolean flag = true;
+            //anotherSortButt.setEnabled(false);
+            for (int i = 1;i<numberOfSortedEl;++i){
+                if (Integer.valueOf(ourArray[i-1].getText())>Integer.valueOf(ourArray[i].getText())){
+                    flag = false;
+                    break;}
+            }
+            if (flag==false) {
+                Vector<Integer> result = new Vector<>();
+                int[] safeArr = new int[maxElem];
+                if (step == -1) step = 0;
+                ++step;
+                for (int i = 0; i < maxElem; ++i) {
+                    safeArr[i] = firstSafedArray[i];
+                }
+                stepByStepSort(step, result, safeArr);
+            } //else {
+                //anotherSortButt.setEnabled(true);
+            //}
+
+    }
+
+}
+
+    public static class prevStepActionListener implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+           // anotherSortButt.setEnabled(false);
+            Vector<Integer> result = new Vector<>();
+            int[] safeArr = new int[maxElem];
+            if(step>0){
+            --step;
+            for (int i = 0;i<maxElem;++i){
+                safeArr[i] = firstSafedArray[i];
+            }
+            stepByStepSort(step,result,safeArr);}
+            else if(step==0){
+                stepByStepSort(0,result,safeArr);
+              //  anotherSortButt.setEnabled(true);
+            }
+        }
+
+    }
+
 }
