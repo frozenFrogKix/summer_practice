@@ -13,10 +13,10 @@ public class BubbleSort implements Sortable {
     }
 
     @Override
-    public Vector<Integer> sort(int step){
-        int nowStep=0;
+    public Vector<Integer> sort(int step) {
+        int nowStep = 0;
         Vector<Integer> result = new Vector<Integer>();
-        if (step!=0) {
+        if (step != 0) {
             for (Integer i = numb - 1; i >= 0; i--)
                 for (Integer j = 0; j < i; ++j)
                     if (array[j] > array[j + 1]) {

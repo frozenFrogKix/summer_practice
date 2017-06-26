@@ -29,11 +29,11 @@ public class InsertionSort implements Sortable {
     int j;
     for (int i = 1;i<numb;++i){
          j = i;
-        while (j>0&&array[j-1]>array[j]){
+        while (j > 0 && array[j-1] > array[j]){
 
             result.add(j-1);
             result.add(j);
-            swap(array,j-1,j);
+            swap(array,j - 1,j);
             ++nowStep;
             if (nowStep==step) return result;
             --j;
