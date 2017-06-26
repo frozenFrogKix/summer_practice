@@ -106,6 +106,7 @@ public class Main {
             sortedEl[i].setOrientation(JProgressBar.VERTICAL);
             sortedEl[i].setStringPainted(true);
             sortedEl[i].setString("");
+            sortedEl[i].setPreferredSize(new Dimension(20,130));
             secVisPanel.add(sortedEl[i]);
         }
         secVisPanel.add(nextStepSortButt);
@@ -340,6 +341,7 @@ public class Main {
         anotherSortButt.setEnabled(false);
         getButt.setEnabled(false);
         randomButt.setEnabled(false);
+        sortBox.setEnabled(false);
         for (int i = 0;i<maxElem;++i)
             ourArray[i].setEnabled(false);
 
@@ -349,6 +351,7 @@ public class Main {
         anotherSortButt.setEnabled(true);
         getButt.setEnabled(true);
         randomButt.setEnabled(true);
+        sortBox.setEnabled(true);
         for (int i = 0;i<maxElem;++i)
             ourArray[i].setEnabled(true);
 
@@ -559,6 +562,7 @@ public class Main {
                 case "Step-by-Step":
                     lock();
                     anotherSortButt.setEnabled(true);
+
                     step = 1;
                     for (int i = 0;i<maxElem;++i){
                         firstSafedArray[i] = safeArr[i];
